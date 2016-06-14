@@ -18,7 +18,7 @@ public class Field extends JPanel implements Serializable {
         this.x = x;
         this.y = y;
         cells = new Cell[x][y];
-        cellSize = new Dimension(10, 10);
+        cellSize = new Dimension(30, 30);
         listener = new ClickListener(this);
 
         setLayout(new GridLayout(y, x));
@@ -41,7 +41,7 @@ public class Field extends JPanel implements Serializable {
         this.y = f.getYdim();
         Cell[][] old = f.getCellsMap();
         cells = new Cell[x][y];
-        cellSize = new Dimension(10,10);
+        cellSize = new Dimension(30,30);
         listener = new ClickListener(this);
 
         setLayout(new GridLayout(y,x));

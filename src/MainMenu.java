@@ -55,7 +55,6 @@ public class MainMenu extends JFrame {
         });
     }
 
-
     private void onGenerateButtonClicked() {
         int x = Integer.parseInt(dimX.getText());
         int y = Integer.parseInt(dimY.getText());

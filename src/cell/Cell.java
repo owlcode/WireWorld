@@ -13,6 +13,7 @@ import static java.lang.Math.abs;
 public class Cell extends JLabel {
     private int state;
 
+    public Cell() {state = -1;}
     public Cell(int x) {
         state = x;
     }

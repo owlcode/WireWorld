@@ -2,24 +2,14 @@ package cell;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Random;
 
-import static java.lang.Math.abs;
-
-/**
- * @author owlcode
- * @state 0 - head; 1 - tail; 2 - connector; 3 - blank
- */
 public class Cell extends JLabel {
-    private int state;
+    protected int state;
 
-    public Cell() {state = -1;}
-    public Cell(int x) {
-        state = x;
-    }
+    public Cell() { state = -1; }
 
-    public void setState(int x) {
-        state = x;
+    public Integer getState() {
+        return state;
     }
 
     public Color checkBackground() {
@@ -28,7 +18,5 @@ public class Cell extends JLabel {
         return t[state];
     }
 
-    public int checkState() {
-        return state;
-    }
+
 }

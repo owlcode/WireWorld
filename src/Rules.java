@@ -1,8 +1,12 @@
 import cell.Cell;
 
 public class Rules {
-    public static int nextState(int x, int y, Cell[][] map) {
-        int state = map[x][y].checkState();
+    private Cell[][] map;
+
+    public Rules(Cell[][] m) {map=m;}
+
+    public int nextState(int x, int y) {
+        int state = map[x][y].getState();
         int count = 0;
 
         if(state == 3) {
@@ -19,7 +23,7 @@ public class Rules {
                 if(i >= map.length || i < 0 || j >= map[0].length || j < 0) {
                     continue;
                 } else {
-                    if(map[i][j].checkState() == 0) {
+                    if(map[i][j].getState() == 0) {
                         count++;
                     }
                 }
@@ -34,4 +38,7 @@ public class Rules {
     }
 
 
+    public int checkSingleCellNextState(Cell c) {
+        return 0;
+    }
 }

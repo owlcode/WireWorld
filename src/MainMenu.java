@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
@@ -20,6 +21,7 @@ public class MainMenu extends JFrame {
 
     private JFrame field;
     private Field f;
+
 
     public MainMenu() {
         setContentPane(contentPane);
@@ -56,8 +58,15 @@ public class MainMenu extends JFrame {
     }
 
     private void onGenerateButtonClicked() {
-        int x = Integer.parseInt(dimX.getText());
-        int y = Integer.parseInt(dimY.getText());
+        Integer x,y;
+
+        if (dimX.getText().equals("") || dimY.getText().equals("")) {
+            Inform inform = new Inform("Uzupełnij pola");
+            return;
+        } else {
+            x = Integer.parseInt(dimX.getText());
+            y = Integer.parseInt(dimY.getText());
+        }
 
         f = new Field(x, y);
 
@@ -88,24 +97,43 @@ public class MainMenu extends JFrame {
             } else {
                 onStop();
             }
-
         }
     };
 
     private void onSaveButtonClicked() {
-        Stream stream = new Stream();
-        stream.save(f);
+        JFileChooser chooser = new JFileChooser();
+        int option = chooser.showSaveDialog(MainMenu.this);
+
+        if(option == JFileChooser.APPROVE_OPTION) {
+            File file = chooser.getSelectedFile();
+            Stream stream = new Stream();
+            stream.save(file, f);
+            Inform inf = new Inform("Pomyślnie zapisałeś plik");
+        }
     }
 
     private void onReadButtonClicked() {
-        Stream stream = new Stream();
-        f = stream.read();
-        field.setContentPane(f);
-        field.pack();
-        field.setVisible(true);
+        final JFileChooser fc = new JFileChooser();
+        final int val = fc.showOpenDialog(MainMenu.this);
+
+        if (val == JFileChooser.APPROVE_OPTION) {
+            File sf = fc.getSelectedFile();
+            Stream stream = new Stream();
+
+            f = stream.read(sf);
+            field.setContentPane(f);
+            field.pack();
+            field.setVisible(true);
+            Inform inform = new Inform("Pomyślnie otworzono plik");
+        }
     }
 
     private void onStart() {
+        if(num.getText().equals("")) {
+            Inform inf = new Inform("Wstaw liczbę generacji");
+            return;
+        }
+
         q = Integer.parseInt(num.getText());
 
         timer.start();

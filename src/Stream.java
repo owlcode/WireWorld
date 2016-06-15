@@ -1,7 +1,4 @@
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 
 public class Stream {
     private Stream stream;
@@ -10,28 +7,27 @@ public class Stream {
 
     }
 
-    public void save(Field f) {
+    public void save(File file, Field f) {
         try {
-            FileOutputStream fout = new FileOutputStream("xor.wireworld");
+            FileOutputStream fout = new FileOutputStream(file);
             ObjectOutputStream oos = new ObjectOutputStream(fout);
             oos.writeObject(f);
             oos.close();
-            System.out.println("done");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public Field read() {
-        Field f;
+    public Field read(File f) {
+        Field field;
 
         try {
-            FileInputStream fin = new FileInputStream("xor.wireworld");
+            FileInputStream fin = new FileInputStream(f);
             ObjectInputStream ois = new ObjectInputStream(fin);
-            f = (Field)ois.readObject();
+            field = (Field)ois.readObject();
             ois.close();
 
-            return f;
+            return field;
         } catch (Exception e) {
             e.printStackTrace();
         }

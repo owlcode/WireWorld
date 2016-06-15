@@ -15,13 +15,11 @@ public class MainMenu extends JFrame {
     private JTextField dimX;
     private JTextField dimY;
     private JTextField num;
-    private boolean firstTime = true;
     private Timer timer;
     private int q;
 
-    private JFrame field;
+    private JPanel fw;
     private Field f;
-
 
     public MainMenu() {
         setContentPane(contentPane);
@@ -69,15 +67,9 @@ public class MainMenu extends JFrame {
         }
 
         f = new Field(x, y);
+        fw = new FieldWindow(f);
 
-        if (firstTime) {
-            field = new JFrame("Visualisation");
-            firstTime = false;
-        }
-
-        field.setContentPane(f);
-        field.pack();
-        field.setVisible(true);
+        Main.refreshFieldWindowFrame(fw);
 
         timer = new Timer(200, action);
         timer.setInitialDelay(0);
@@ -88,9 +80,8 @@ public class MainMenu extends JFrame {
         public void actionPerformed(ActionEvent event) {
             if (q>0) {
                 Field temp = new Field(f);
-                field.setContentPane(temp);
-                field.pack();
-                field.setVisible(true);
+                fw = new FieldWindow(temp);
+                Main.refreshFieldWindowFrame(fw);
                 f = temp;
                 q--;
                 num.setText(Integer.toString(q));
@@ -121,9 +112,8 @@ public class MainMenu extends JFrame {
             Stream stream = new Stream();
 
             f = stream.read(sf);
-            field.setContentPane(f);
-            field.pack();
-            field.setVisible(true);
+            fw = new FieldWindow(f);
+            Main.refreshFieldWindowFrame(fw);
             Inform inform = new Inform("Pomyślnie otworzono plik");
         }
     }

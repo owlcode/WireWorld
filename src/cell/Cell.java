@@ -11,12 +11,4 @@ public class Cell extends JLabel {
     public Integer getState() {
         return state;
     }
-
-    public Color checkBackground() {
-        Color[] t = {Color.RED, Color.yellow, Color.BLACK, Color.WHITE};
-
-        return t[state];
-    }
-
-
 }

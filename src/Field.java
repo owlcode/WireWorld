@@ -6,10 +6,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.Serializable;
 
-public class Field extends JPanel implements Serializable {
+public class Field implements Serializable {
     private Cell[][] cells;
-    private Dimension cellSize;
-    private transient ClickListener listener;
     private int x;
     private int y;
 
@@ -17,19 +15,10 @@ public class Field extends JPanel implements Serializable {
         this.x = x;
         this.y = y;
         cells = new Cell[x][y];
-        cellSize = new Dimension(15, 15);
-        listener = new ClickListener(this);
-
-        setLayout(new GridLayout(y, x));
 
         for (int i = 0; i < x; i++) {
             for (int j = 0; j < y; j++) {
                 EmptyCell cell = new EmptyCell();
-                cell.setOpaque(true);
-                cell.setBackground(cell.checkBackground());
-                cell.addMouseListener(listener);
-                cell.setPreferredSize(cellSize);
-                add(cell);
                 cells[i][j] = cell;
             }
         }
@@ -40,41 +29,17 @@ public class Field extends JPanel implements Serializable {
         this.y = f.getYdim();
         Cell[][] old = f.getCellsMap();
         cells = new Cell[x][y];
-        cellSize = new Dimension(15,15);
-        listener = new ClickListener(this);
-
-        setLayout(new GridLayout(y,x));
 
         for (int i=0;i<x;i++) {
             for (int j=0;j<y;j++) {
-
-//                Cell cell = new Cell( Rules.nextState(i,j,old) );
-
-//                cell.setOpaque(true);
-//                cell.setBackground(cell.checkBackground());
-//                cell.addMouseListener(listener);
-//                cell.setPreferredSize(cellSize);
-//                add(cell);
-//                cells[i][j] = cell;
+                Rules rules = new Rules(old);
+                Cell cell = CellFactory.Generate(rules.nextState(i,j));
+                cells[i][j] = cell;
             }
         }
     }
 
-    public void labelPressed(Cell cell) {
-        for (int i = 0; i < x; i++) {
-            for (int j = 0; j < y; j++) {
-                if (cell == cells[i][j]) {
 
-//                    Cell newCell = new CellFactory(cell.getState()+1);
-//                    cells[i][j] = newCell;
-//                    cells[i][j].setState((cells[i][j].checkState()+1)%4);
-//                    cells[i][j].setBackground(cells[i][j].checkBackground());
-
-
-                }
-            }
-        }
-    }
 
     public int getXdim() {
         return this.x;

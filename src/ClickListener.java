@@ -11,7 +11,11 @@ public class ClickListener extends MouseAdapter {
 
     @Override
     public void mousePressed(MouseEvent e) {
-        field.labelPressed((JLabel) e.getSource());
+        if(SwingUtilities.isRightMouseButton(e)) {
+            field.addContentFromFile((JLabel) e.getSource());
+        } else {
+            field.labelPressed((JLabel) e.getSource());
+        }
     }
 
 }

@@ -46,4 +46,46 @@ public class FieldWindow extends JPanel {
             }
         }
     }
+
+    public void addContentFromFile(JLabel label) {
+        final JFileChooser fc = new JFileChooser("C:\\WireWorld\\things");
+        final int val = fc.showOpenDialog(FieldWindow.this);
+        int x = grid.length;
+        int y = grid[0].length;
+        int struct_x, struct_y;
+        Field f;
+        Cell[][] struct;
+
+
+        if (val == JFileChooser.APPROVE_OPTION) {
+            Stream stream = new Stream();
+            f = stream.read(fc.getSelectedFile());
+            if(f == null) {
+                Inform inform = new Inform("Wystąpił błąd przy otwieraniu pliku");
+                return;
+            }
+            struct = f.getCellsMap();
+            struct_x = f.getXdim();
+            struct_y = f.getYdim();
+
+            for (int i = 0; i < x; i++) {
+                for (int j = 0; j < y; j++) {
+                    if (label == grid[i][j]) {
+                        if (i + struct_x <= x && j + struct_y <= y) {
+
+                            for (int ii=0; ii < struct_x; ii++) {
+                                for (int jj=0; jj < struct_y; jj++ ) {
+                                    cells[i + ii][j + jj] = struct[ii][jj];
+                                    grid[i + ii][j + jj].setBackground(t[(cells[i+ii][j+jj].getState())%t.length]);
+                                }
+                            }
+                            Main.refreshFieldWindowFrame(this);
+                            return;
+                        }
+                    }
+                }
+            }
+
+        }
+    }
 }

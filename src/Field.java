@@ -2,8 +2,6 @@ import cell.Cell;
 import cell.CellFactory;
 import cell.EmptyCell;
 
-import javax.swing.*;
-import java.awt.*;
 import java.io.Serializable;
 
 public class Field implements Serializable {
@@ -30,16 +28,20 @@ public class Field implements Serializable {
         Cell[][] old = f.getCellsMap();
         cells = new Cell[x][y];
 
-        for (int i=0;i<x;i++) {
-            for (int j=0;j<y;j++) {
+        for (int i = 0; i < x; i++) {
+            for (int j = 0; j < y; j++) {
                 Rules rules = new Rules(old);
-                Cell cell = CellFactory.Generate(rules.nextState(i,j));
+                Cell cell = CellFactory.Generate(rules.nextState(i, j));
                 cells[i][j] = cell;
             }
         }
     }
 
-
+    public Field(Cell[][] c) {
+        this.cells = c;
+        this.x = c.length;
+        this.y = c[0].length;
+    }
 
     public int getXdim() {
         return this.x;
@@ -52,8 +54,6 @@ public class Field implements Serializable {
     public Cell[][] getCellsMap() {
         return this.cells;
     }
-
-
 
 
 }

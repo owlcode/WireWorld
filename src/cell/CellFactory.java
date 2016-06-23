@@ -34,4 +34,18 @@ public class CellFactory {
 
         return null;
     }
+
+    public static Cell Generate(String s) {
+        if(s.equals("E")) {
+            return new EmptyCell();
+        } else if(s.equals("C")) {
+            return new Connector();
+        } else if(s.equals("H")) {
+            return new Head();
+        } else if(s.equals("T")) {
+            return new Tail();
+        }
+
+        return null;
+    }
 }

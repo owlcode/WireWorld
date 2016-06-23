@@ -1,9 +1,7 @@
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
-import java.util.TimerTask;
-import java.util.concurrent.TimeUnit;
+
 
 public class MainMenu extends JFrame {
     private JPanel contentPane;
@@ -23,6 +21,7 @@ public class MainMenu extends JFrame {
 
     public MainMenu() {
         setContentPane(contentPane);
+        timer = new Timer(200, action);
 
         buttonStart.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -70,9 +69,6 @@ public class MainMenu extends JFrame {
         fw = new FieldWindow(f);
 
         Main.refreshFieldWindowFrame(fw);
-
-        timer = new Timer(200, action);
-        timer.setInitialDelay(0);
     }
 
     ActionListener action = new ActionListener() {
@@ -108,13 +104,15 @@ public class MainMenu extends JFrame {
         final int val = fc.showOpenDialog(MainMenu.this);
 
         if (val == JFileChooser.APPROVE_OPTION) {
-            File sf = fc.getSelectedFile();
             Stream stream = new Stream();
-
-            f = stream.read(sf);
-            fw = new FieldWindow(f);
-            Main.refreshFieldWindowFrame(fw);
-            Inform inform = new Inform("Pomyślnie otworzono plik");
+            f = stream.read(fc.getSelectedFile());
+            if(f == null) {
+                Inform inform = new Inform("Wystąpił błąd przy otwieraniu pliku");
+            } else {
+                fw = new FieldWindow(f);
+                Main.refreshFieldWindowFrame(fw);
+                Inform inform = new Inform("Pomyślnie otworzono plik");
+            }
         }
     }
 
@@ -126,6 +124,7 @@ public class MainMenu extends JFrame {
 
         q = Integer.parseInt(num.getText());
 
+        timer.setInitialDelay(0);
         timer.start();
     }
 

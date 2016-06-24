@@ -12,5 +12,4 @@ public class ConnectorTest {
         Integer i = cell.getState();
         assertEquals(new Integer(-1),i);
     }
-
 }

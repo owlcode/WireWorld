@@ -37,7 +37,7 @@ public class Stream {
         return null;
     }
 
-    private Field readFromSerializedObject(File f) throws IOException, ClassNotFoundException {
+    public Field readFromSerializedObject(File f) throws IOException, ClassNotFoundException {
         Field field;
 
         FileInputStream fin = new FileInputStream(f);
@@ -48,7 +48,7 @@ public class Stream {
         return field;
     }
 
-    private Field readFromUserDefinition(File f) throws IOException {
+    public Field readFromUserDefinition(File f) throws IOException {
         Field field;
 
         BufferedReader b = new BufferedReader(new FileReader(f));
@@ -67,8 +67,12 @@ public class Stream {
 
                 for (int i = 0; i < x; i++) {
                     for (int j = 0; j < y; j++) {
-                        cells[i][j] = CellFactory.Generate(tmp[tab]);
-                        tab++;
+                        if(CellFactory.Generate(tmp[tab])==null) {
+                            throw new IOException("Błędny format pliku");
+                        } else {
+                            cells[i][j] = CellFactory.Generate(tmp[tab]);
+                            tab++;
+                        }
                     }
                 }
 

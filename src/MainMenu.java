@@ -61,14 +61,21 @@ public class MainMenu extends JFrame {
             Inform inform = new Inform("Uzupełnij pola");
             return;
         } else {
-            x = Integer.parseInt(dimX.getText());
-            y = Integer.parseInt(dimY.getText());
+            try {
+                x = Integer.parseInt(dimX.getText());
+                y = Integer.parseInt(dimY.getText());
+
+                f = new Field(x, y);
+                fw = new FieldWindow(f);
+
+                Main.refreshFieldWindowFrame(fw);
+            } catch(Exception e) {
+                Inform inf = new Inform("Błędne dane");
+            }
+
         }
 
-        f = new Field(x, y);
-        fw = new FieldWindow(f);
 
-        Main.refreshFieldWindowFrame(fw);
     }
 
     ActionListener action = new ActionListener() {
